@@ -4,7 +4,7 @@ import java.lang.reflect.Method;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.smart4j.framework.annotation.Transaction;
-import org.smart4j.framework.util.DatabaseHelper;
+import org.smart4j.framework.helper.DatabaseHelper;
 
 /**
  * 事务代理
