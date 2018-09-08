@@ -1,4 +1,4 @@
-package org.smart4j.chapter2.util;
+package org.smart4j.framework.util;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -16,6 +16,7 @@ import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.smart4j.framework.helper.ConfigHelper;
 
 /**
  * 增删改查操作工具类
@@ -34,12 +35,10 @@ public final class DatabaseHelper {
     CONNECTION_THREAD_LOCAL = new ThreadLocal<Connection>();
 
     QUERY_RUNNER = new QueryRunner();
-
-    Properties conf = PropsUtil.loadProps("config.properties");
-    String driver = conf.getProperty("jdbc.driver");
-    String url = conf.getProperty("jdbc.url");
-    String username = conf.getProperty("jdbc.username");
-    String password = conf.getProperty("jdbc.password");
+    String driver = ConfigHelper.getJdbcDriver();
+    String url = ConfigHelper.getJdbcUrl();
+    String username = ConfigHelper.getJdbcUsername();
+    String password = ConfigHelper.getJdbcPassword();
 
     DATA_SOURCE = new BasicDataSource();
     DATA_SOURCE.setDriverClassName(driver);
@@ -174,7 +173,7 @@ public final class DatabaseHelper {
     }
     columns.replace(columns.lastIndexOf(", "), columns.length(), ")");
     values.replace(values.lastIndexOf(", "), values.length(), ")");
-    sql.append(columns).append(values);
+    sql.append(columns).append(" values ").append(values);
 
     Object[] params = fieldMap.values().toArray();
     return executeUpdate(sql.toString(), params) == 1;

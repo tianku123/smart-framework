@@ -85,14 +85,14 @@ public final class CastUtil {
     /**
      * 转换成String，默认值空字符串
      */
-    private static String castString(Object obj) {
+    public static String castString(Object obj) {
         return CastUtil.castString(obj, "");
     }
 
   /**
      * 转换成String，可指定默认值
      */
-    private static String castString(Object obj, String defaultValue) {
+    public static String castString(Object obj, String defaultValue) {
         return obj != null ? String.valueOf(obj) : defaultValue;
     }
 

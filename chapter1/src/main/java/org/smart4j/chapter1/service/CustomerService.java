@@ -1,14 +1,17 @@
-package org.smart4j.chapter2.service;
+package org.smart4j.chapter1.service;
 
 import java.util.List;
 import java.util.Map;
-import org.smart4j.chapter2.model.Customer;
-import org.smart4j.chapter2.util.DatabaseHelper;
+import org.smart4j.chapter1.model.Customer;
+import org.smart4j.framework.annotation.Service;
 import org.smart4j.framework.annotation.Transaction;
+import org.smart4j.framework.util.DatabaseHelper;
+import org.smart4j.framework.util.StringUtil;
 
 /**
  * Created by admin on 2018/8/21.
  */
+@Service
 public class CustomerService {
 
     /**
@@ -16,7 +19,12 @@ public class CustomerService {
      */
     public List<Customer> getCustomerList(String name) {
         String sql = "select * from customer";
-        return DatabaseHelper.queryEntityList(Customer.class, sql, new Object[]{name});
+        Object[] params = null;
+        if (StringUtil.isNotEmpty(name)) {
+            sql += " where name like ?";
+            params = new Object[]{"%" + name + "%"};
+        }
+        return DatabaseHelper.queryEntityList(Customer.class, sql, params);
     }
 
     /**
@@ -32,7 +40,9 @@ public class CustomerService {
      */
     @Transaction
     public boolean createCustomer(Map<String, Object> fieldMap) {
-        return DatabaseHelper.insertEntity(Customer.class, fieldMap);
+        boolean b =  DatabaseHelper.insertEntity(Customer.class, fieldMap);
+        int a = 1/0;
+        return b;
     }
 
     /**
