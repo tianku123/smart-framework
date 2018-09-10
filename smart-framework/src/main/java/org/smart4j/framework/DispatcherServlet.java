@@ -74,33 +74,11 @@ public class DispatcherServlet extends HttpServlet {
       Object controllerBean = BeanHelper.getBean(controllerClass);
       // 创建请求参数对象
       Param param;
-      if (UploadHelper.isMultipart(request)) {
+      if (UploadHelper.isMultipart(request)) {// 上传文件
         param = UploadHelper.createParam(request);
       } else {
         param = RequestHelper.createParam(request);
       }
-//      Map<String, Object> paramMap = new HashMap<String, Object>();
-//      Enumeration<String> paramNames = request.getParameterNames();
-//      while (paramNames.hasMoreElements()) {
-//        String paramName = paramNames.nextElement();
-//        String paramValue = request.getParameter(paramName);
-//        paramMap.put(paramName, paramValue);
-//      }
-//      String body = CodecUtil.decodeURL(StreamUtil.getString(request.getInputStream()));
-//      if (StringUtil.isNotEmpty(body)) {
-//        String[] params = StringUtil.splitString(body, "&");
-//        if (ArrayUtils.isNotEmpty(params)) {
-//          for (String param : params) {
-//            String[] array = StringUtil.splitString(param, "=");
-//            if (ArrayUtils.isNotEmpty(array) && array.length == 2) {
-//              String paramName = array[0];
-//              String paramValue = array[1];
-//              paramMap.put(paramName, paramValue);
-//            }
-//          }
-//        }
-//      }
-//      Param param = new Param(paramMap);
       // 调用 Action 方法
       Method actionMethod = handler.getActionMethod();
       Object result;
@@ -137,9 +115,9 @@ public class DispatcherServlet extends HttpServlet {
       throws IOException, ServletException {
     String path = view.getPath();
     if (StringUtil.isNotEmpty(path)) {
-      if (path.startsWith("/")) {
+      if (path.startsWith("/")) {// 重定向
         response.sendRedirect(request.getContextPath() + path);
-      } else {
+      } else {// 转到jsp
         Map<String, Object> model = view.getModel();
         for (Map.Entry<String, Object> entry : model.entrySet()) {
           request.setAttribute(entry.getKey(), entry.getValue());

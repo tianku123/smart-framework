@@ -43,8 +43,16 @@ public final class UploadHelper {
    * 初始化
    */
   public static void init(ServletContext servletContext) {
+    /**
+     * 每一个servlet上下文都需要一个临时存储目录。Servlet容器必须为每一个servlet上下文提供一个私有的临时目录，
+     * 并且使它可以通过javax.servlet.context.tempdir上下文属性可用。这些属性关联的对象必须是java.io.File类型。
+     *
+     * 这项需求认可了很多servlet引擎实现中提供的常见便利。容器不需要在servlet重启时维持临时目录的内容，
+     * 但是需要确保一个servlet上下文的临时目录的内容对于该servlet容器上运行的其他web应用的servlet上下文不可见。
+     */
     File repository = (File) servletContext.getAttribute("javax.servlet.context.tempdir");
-    servletFileUpload = new ServletFileUpload(new DiskFileItemFactory(DiskFileItemFactory.DEFAULT_SIZE_THRESHOLD, repository));
+    servletFileUpload = new ServletFileUpload(
+        new DiskFileItemFactory(DiskFileItemFactory.DEFAULT_SIZE_THRESHOLD, repository));
     int uploadLimit = ConfigHelper.getAppUploadLimit();
     if (uploadLimit != 0) {
       servletFileUpload.setFileSizeMax(uploadLimit * 1024 * 1024);
@@ -82,7 +90,8 @@ public final class UploadHelper {
                   long fileSize = fileItem.getSize();
                   String contentType = fileItem.getContentType();
                   InputStream inputStream = fileItem.getInputStream();
-                  fileParamList.add(new FileParam(fieldName, fileName, fileSize, contentType, inputStream));
+                  fileParamList
+                      .add(new FileParam(fieldName, fileName, fileSize, contentType, inputStream));
                 }
               }
             }

@@ -1,4 +1,7 @@
 <%@ page pageEncoding="UTF-8" %>
+<%
+    request.setAttribute("BASE", request.getContextPath());
+%>
 <html>
 <head>
 <title>客户管理 - 创建客户</title>

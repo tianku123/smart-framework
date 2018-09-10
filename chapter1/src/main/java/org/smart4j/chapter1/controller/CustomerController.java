@@ -31,7 +31,7 @@ public class CustomerController {
 
   @Action("get:/goAddCustomerJsp")
   public View goAddCustomerJsp() {
-    return new View("/addCustomer.jsp", new HashMap<String, Object>());
+    return new View("addCustomer.jsp", new HashMap<String, Object>());
   }
 
   @Action("post:/customer_create")
