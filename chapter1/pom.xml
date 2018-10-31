@@ -60,6 +60,12 @@
       <artifactId>shiro-core</artifactId>
       <version>1.2.3</version>
     </dependency>
+    <!-- Shiro Web -->
+    <dependency>
+      <groupId>org.apache.shiro</groupId>
+      <artifactId>shiro-web</artifactId>
+      <version>1.2.3</version>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
